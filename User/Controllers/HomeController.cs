@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Clients.Controllers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -6,20 +8,24 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using User.Data;
 using User.Models;
+using User.Utils.General;
 
 namespace User.Controllers
 {
-    [Authorize]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
+        //protected readonly IDDLRepository repository;
+        //protected readonly IFunctionRepository function;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager) : base(context, signInManager, userManager)
         {
-            _logger = logger;
+            //repository = _repository;
+            //function = _function;
         }
 
+        [Description("Endrit Balaj", "Index Method", " ")]
         public IActionResult Index()
         {
             return View();
