@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using User.Data;
 
 namespace User.Utils.General
 {
@@ -16,7 +17,7 @@ namespace User.Utils.General
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context /*ClientsContext db*/)
+        public async Task Invoke(HttpContext context, ApplicationDbContext db)
         {
             try
             {
@@ -24,13 +25,13 @@ namespace User.Utils.General
             }
             catch (Exception ex)
             {
-                await HandleExceptionMessageAsync(context, ex/*, db*/).ConfigureAwait(false);
+                await HandleExceptionMessageAsync(context, ex, db).ConfigureAwait(false);
             }
         }
 
-        private static async Task HandleExceptionMessageAsync(HttpContext context, Exception exception /*ClientsContext db*/)
+        private static async Task HandleExceptionMessageAsync(HttpContext context, Exception exception, ApplicationDbContext db)
         {
-            //db.ChangeTracker.Clear();
+            db.ChangeTracker.Clear();
             Log log = new Log
             {
                 UserId = context.User.FindFirstValue(ClaimTypes.NameIdentifier),

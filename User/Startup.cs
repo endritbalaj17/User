@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using User.Data;
+using User.Utils.General;
 
 namespace User
 {
@@ -52,6 +53,9 @@ namespace User
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
+            app.UseExceptionHandlerMiddleware();
+
             app.UseStaticFiles();
 
             app.UseRouting();
