@@ -1,4 +1,6 @@
-﻿using User.Utils;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using User.Utils;
 
 namespace User.Models
 {
@@ -14,31 +16,6 @@ namespace User.Models
 
 	  public string PhoneNumber { get; set; }
 
-	  public string FirstName { get; set; }
-
-	  public string LastName { get; set; }
-
-	  public string ImageProfile { get; set; }
-
-	  public LanguageEnum Language { get; set; }
-
-	  public GenderEnum Gender { get; set; }
-
-	  public TempleateMode Mode { get; set; }
-
-	  public bool Notification { get; set; }
-
-	  public bool AdminNoti { get; set; }
-
-	  public string PersonalNumber { get; set; }
-
-	  public string Address { get; set; }
-
-	  public int? MunicipalityId { get; set; }
-
-	  public int? LegalEntityId { get; set; }
-
-	  public int? PoliceStationID { get; set; }
-
-    }
+	  public List<IdentityUser> Details { get; set; }
+	}
 }

@@ -39,11 +39,7 @@ namespace Clients.Controllers
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             user = await _userManager.GetUserAsync(context.HttpContext.User);
-            //if (user.PasswordExpires <= DateTime.Now)
-            //{
-            //    ViewData["Error"] = new ErrorVM { ErrorNumber = ErrorStatus.Info, ErrorDescription = Resource.MustChangePassword };
-            //    context.HttpContext.Response.Redirect("/Identity/Account/Manage/ChangePassword");
-            //}
+
             await _signInManager.RefreshSignInAsync(user);
 
             ViewData["InternalUser"] = user;
@@ -59,37 +55,10 @@ namespace Clients.Controllers
                 Role = User.Claims.FirstOrDefault(t => t.Subject.RoleClaimType == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value
             };
 
-            //Data.General.Log log = new ();
-            //var con = context.ActionDescriptor as ControllerActionDescriptor;
-            //DescriptionAttribute description = ((DescriptionAttribute[])con.MethodInfo.GetCustomAttributes(typeof(DescriptionAttribute), inherit: true)).FirstOrDefault();
-
-            //log.Action = context.HttpContext.Request.RouteValues["action"].ToString();
-            //log.ActionDescription = context.HttpContext.Request.RouteValues["action"].ToString();
-            //log.Berror = false;
-            //log.Controller = context.HttpContext.Request.RouteValues["controller"].ToString();
-            //log.InsertedDate = DateTime.Now;
-            //log.UserId = User.Identity.IsAuthenticated ? user.Id : null;
-            //log.Ip = context.HttpContext.Connection.RemoteIpAddress.ToString();
-            //log.HostName = context.HttpContext.Connection.RemoteIpAddress.ToString();
-            //log.Description = description.Description;
-            //log.Developer = description.Delevoper;
-            //log.DescriptionTitle = description.Title;
-            //log.HttpMethod = context.HttpContext.Request.Method;
-            //log.HostName = context.HttpContext.Connection.RemoteIpAddress.ToString(); //Dns.GetHostEntry(context.HttpContext.Connection.RemoteIpAddress.ToString()).HostName;
-            //log.Url = context.HttpContext.Request.GetDisplayUrl();
-
-            //if (context.HttpContext.Request.HasFormContentType)
-            //{
-            //    IFormCollection form = await context.HttpContext.Request.ReadFormAsync();
-            //    log.FormContent = JsonConvert.SerializeObject(form);
-            //}
-
-            //_context.Logs.Add(log);
-            //await _context.SaveChangesAsync();
+          
 
             await next();
 
-            //ViewData["Error"] = TempData.Get<ErrorVM>("Error");
         }
 
     

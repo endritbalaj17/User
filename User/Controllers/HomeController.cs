@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using User.Data;
 using User.Models;
+using User.Repository;
 using User.Utils.General;
 
 namespace User.Controllers
@@ -17,12 +19,12 @@ namespace User.Controllers
     public class HomeController : BaseController
     {
         //protected readonly IDDLRepository repository;
-        //protected readonly IFunctionRepository function;
+        protected readonly IFunctionRepository function;
 
-        public HomeController(ApplicationDbContext context, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager) : base(context, signInManager, userManager)
+        public HomeController(ApplicationDbContext context, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IFunctionRepository _function) : base(context, signInManager, userManager)
         {
             //repository = _repository;
-            //function = _function;
+            function = _function;
         }
 
         [Description("Endrit Balaj", "Index Method", " ")]
@@ -31,9 +33,12 @@ namespace User.Controllers
             return View();
         }
 
-        public IActionResult Users()
+        public async Task<IActionResult> Users()
         {
-            return View();
+            UserModel model = new();
+            var users = await _context.Users.ToListAsync();
+            model.Details = users;
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using User.Data;
+using User.Repository;
 using User.Utils.General;
 
 namespace User
@@ -35,6 +36,9 @@ namespace User
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddScoped<IDDLRepository, DDLRepository>();
+            services.AddScoped<IFunctionRepository, FunctionRepository>();
             services.AddControllersWithViews();
         }
 
