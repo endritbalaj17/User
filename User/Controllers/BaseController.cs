@@ -16,6 +16,7 @@ using User.Models;
 using User.Utils;
 using User.Utils.General;
 using User.Data;
+using System.Collections.Generic;
 
 namespace Clients.Controllers
 {
@@ -53,14 +54,14 @@ namespace Clients.Controllers
                 Id = user.Id,
                 PhoneNumber = user.PhoneNumber,
                 Username = user.UserName,
-                
+
                 //Role =User.Claims.FirstOrDefault(t => t.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
                 Role = User.Claims.FirstOrDefault(t => t.Subject.RoleClaimType == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value
             };
 
             //Data.General.Log log = new ();
-            var con = context.ActionDescriptor as ControllerActionDescriptor;
-            DescriptionAttribute description = ((DescriptionAttribute[])con.MethodInfo.GetCustomAttributes(typeof(DescriptionAttribute), inherit: true)).FirstOrDefault();
+            //var con = context.ActionDescriptor as ControllerActionDescriptor;
+            //DescriptionAttribute description = ((DescriptionAttribute[])con.MethodInfo.GetCustomAttributes(typeof(DescriptionAttribute), inherit: true)).FirstOrDefault();
 
             //log.Action = context.HttpContext.Request.RouteValues["action"].ToString();
             //log.ActionDescription = context.HttpContext.Request.RouteValues["action"].ToString();
